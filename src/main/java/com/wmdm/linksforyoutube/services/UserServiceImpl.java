@@ -1,11 +1,14 @@
 package com.wmdm.linksforyoutube.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.wmdm.linksforyoutube.models_for_access.Role;
 import com.wmdm.linksforyoutube.models_for_access.User;
 import com.wmdm.linksforyoutube.repositories.UserRepository;
 
@@ -17,20 +20,44 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private RoleService roleService;
+
 	@Override
 	public User addUser(User user) throws Exception {
-		User userSalved = this.userRepository.save(user);
+		User userToBePersist = new User();
+		userToBePersist.setUserName(user.getUserName());
+		userToBePersist.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		userToBePersist.setActive(user.getActive());
+
+		List<Role> roles = new ArrayList<>();
+
+		for (Role r : user.getRoles()) {
+			Role role = this.roleService.getRoleById(r.getNameRole()).get();
+			System.out.println("!WEWEWEWEWEW");
+			roles.add(role);
+		}
+		
+		System.out.println("@@@@@@@@");
+		userToBePersist.setRoles(roles);
+
+		User userSalved = this.userRepository.save(userToBePersist);
+
 		if (userSalved != null) {
 			return userSalved;
 		} else {
-			new NotFoundException("NOT FOUND");
-			return null;
+			throw new NotFoundException("NOT FOUND");
 		}
 	}
 
 	@Override
 	public List<User> getAllUser() throws Exception {
 		List<User> users = this.userRepository.findAll();
+
+		// for(User users){
+		//
+		// }
+
 		if (users.size() > 0) {
 			return users;
 		} else {
@@ -55,9 +82,18 @@ public class UserServiceImpl implements UserService {
 		Optional<User> userInBase = this.userRepository.findById(id);
 		if (userInBase.isPresent()) {
 			userInBase.get().setUserName(user.getUserName());
-			userInBase.get().setPassword(user.getPassword());
+			// userInBase.get().setPassword(new
+			// BCryptPasswordEncoder().encode(user.getPassword()));
 			userInBase.get().setActive(user.getActive());
-			userInBase.get().setRoles(user.getRoles());
+
+			List<Role> roles = new ArrayList<>();
+
+			for (Role r : user.getRoles()) {
+				Role role = this.roleService.getRoleById(r.getNameRole()).get();
+				roles.add(role);
+			}
+
+			userInBase.get().setRoles(roles);
 			return this.userRepository.save(userInBase.get());
 		} else {
 			new NotFoundException("NOT FOUND");

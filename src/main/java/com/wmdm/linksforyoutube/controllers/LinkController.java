@@ -39,7 +39,7 @@ import com.wmdm.linksforyoutube.services.LinkService;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/links")
 @Api(value = "Link End Point")
 public class LinkController {
 

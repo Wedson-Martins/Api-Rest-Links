@@ -44,7 +44,7 @@ public class RoleController {
 		try {
 			List<Role> roles = this.roleService.getAllRoles();
 			return new ResponseEntity<List<Role>>(roles, HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (OperationNotPerformedException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -55,7 +55,10 @@ public class RoleController {
 		try {
 			Optional<Role> roleInBase = this.roleService.getRoleById(nameRole);
 			return new ResponseEntity<Role>(roleInBase.get(), HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (OperationNotPerformedException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

@@ -12,12 +12,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "USERS")
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment" , strategy = "increment")
 	private Long id;
 	private String userName;
 	private String password;

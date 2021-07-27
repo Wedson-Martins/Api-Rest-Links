@@ -27,16 +27,18 @@ public class UserController {
 
 	@PostMapping("/adduser")
 	public ResponseEntity<?> add(@RequestBody User user) {
+		System.out.println("!!!!!!!!!!!!!!!!!!!");
 		try {
 			User userSalved = this.userService.addUser(user);
 			return new ResponseEntity<User>(userSalved, HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println("%%%%%%%%%%%%%%%%%%%");
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
-	@GetMapping("/getallusers")
+	@GetMapping(value = "/getallusers" , produces = "application/json")
 	public ResponseEntity<?> getAll() {
 		try {
 			List<User> users = this.userService.getAllUser();
