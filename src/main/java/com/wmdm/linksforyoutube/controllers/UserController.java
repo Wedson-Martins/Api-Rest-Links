@@ -18,8 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wmdm.linksforyoutube.models_for_access.User;
 import com.wmdm.linksforyoutube.services.UserService;
 
+//import io.swagger.annotations.Api;
+//import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/users")
+//@SecurityRequirement(name = "wmdmAPI")
+//@Api( tags = "Clients")
 public class UserController {
 
 	@Autowired

@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 //Swagger
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
 
 //Pageable
 import org.springframework.data.domain.Page;
@@ -40,7 +40,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @RequestMapping("/links")
-@Api(value = "Link End Point")
+//@Api(value = "Link End Point")
 public class LinkController {
 
 	@Autowired
@@ -50,7 +50,7 @@ public class LinkController {
 	public ResponseEntity<?> index() {
 		return new ResponseEntity<String>("IsOk", HttpStatus.OK);
 	}
-	 @ApiOperation("Add Link")
+//	 @ApiOperation("Add Link")
 	@PostMapping(value = "/addlinks", produces = { "application/json", "application/xml" })
 	public ResponseEntity<?> add(@RequestBody Link link) {
 

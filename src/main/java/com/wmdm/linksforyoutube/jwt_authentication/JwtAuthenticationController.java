@@ -1,4 +1,4 @@
-package com.wmdm.linksforyoutube.controllers;
+package com.wmdm.linksforyoutube.jwt_authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
