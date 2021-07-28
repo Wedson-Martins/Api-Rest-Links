@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wmdm.linksforyoutube.exceptions.OperationNotPerformedException;
+import com.wmdm.linksforyoutube.exceptions.RoleNotFoundException;
 import com.wmdm.linksforyoutube.exceptions.UserNotFoundException;
 import com.wmdm.linksforyoutube.models_for_access.Role;
 import com.wmdm.linksforyoutube.services.RoleService;
@@ -55,7 +56,7 @@ public class RoleController {
 		try {
 			Optional<Role> roleInBase = this.roleService.getRoleById(nameRole);
 			return new ResponseEntity<Role>(roleInBase.get(), HttpStatus.OK);
-		} catch (UserNotFoundException e) {
+		} catch (RoleNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (OperationNotPerformedException e) {
@@ -70,7 +71,7 @@ public class RoleController {
 		try {
 			this.roleService.removeRole(nameRole);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (UserNotFoundException e) {
+		} catch (RoleNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (OperationNotPerformedException e) {
